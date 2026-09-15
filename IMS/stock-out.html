@@ -1,0 +1,570 @@
+html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Stock Out - Inventory Management System</title>
+
+
+    <!-- Bootstrap CSS -->
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+
+    <!-- Bootstrap Icons -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+    >
+
+
+    <!-- Custom CSS -->
+
+    <link
+        rel="stylesheet"
+        href="CSS/style.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<!-- NAVBAR -->
+
+<nav class="navbar navbar-dark bg-dark shadow-sm">
+
+    <div class="container-fluid">
+
+        <a
+            class="navbar-brand fw-bold"
+            href="index.html"
+        >
+
+            <i class="bi bi-boxes me-2"></i>
+
+            Inventory Management System
+
+        </a>
+
+    </div>
+
+</nav>
+
+
+<div class="container-fluid">
+
+    <div class="row">
+
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar col-md-3 col-lg-2 p-3">
+
+            <h5 class="fw-bold mb-3">
+
+                <i class="bi bi-boxes me-2"></i>
+
+                Inventory System
+
+            </h5>
+
+            <hr>
+
+
+            <ul class="nav flex-column">
+
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="index.html"
+                    >
+
+                        <i class="bi bi-speedometer2 me-2"></i>
+
+                        Dashboard
+
+                    </a>
+
+                </li>
+
+
+           
+
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="products.html"
+                    >
+
+                        <i class="bi bi-box-seam me-2"></i>
+
+                        Products
+
+                    </a>
+
+                </li>
+
+
+
+
+               
+
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="alerts.html"
+                    >
+
+                        <i class="bi bi-exclamation-triangle me-2"></i>
+
+                        Low Stock Alerts
+
+                    </a>
+
+                </li>
+
+            </ul>
+
+        </aside>
+
+
+        <!-- MAIN -->
+
+        <main class="col-md-9 col-lg-10 p-4">
+
+
+            <div
+                class="d-flex justify-content-between align-items-center mb-4"
+            >
+
+                <div>
+
+                    <h2 class="fw-bold mb-1">
+                        Stock Out
+                    </h2>
+
+                    <p class="text-muted mb-0">
+                        Remove stock from the selected inventory item.
+                    </p>
+
+                </div>
+
+
+                <a
+                    href="products.html"
+                    class="btn btn-outline-primary"
+                >
+
+                    <i class="bi bi-arrow-left me-2"></i>
+
+                    Back to Products
+
+                </a>
+
+            </div>
+
+
+            <!-- SELECTED PRODUCT -->
+
+            <div class="card bg-light border-0 mb-4">
+
+                <div class="card-body">
+
+                    <h6 class="fw-bold mb-3">
+
+                        <i class="bi bi-box-seam text-primary me-2"></i>
+
+                        Selected Product
+
+                    </h6>
+
+
+                    <div class="row g-3">
+
+
+                        <div class="col-md-4">
+
+                            <label class="form-label text-muted">
+                                Item Code
+                            </label>
+
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="stockOutItemCode"
+                                readonly
+                            >
+
+                        </div>
+
+
+                        <div class="col-md-4">
+
+                            <label class="form-label text-muted">
+                                Category
+                            </label>
+
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="stockOutCategory"
+                                readonly
+                            >
+
+                        </div>
+
+
+                        <div class="col-md-4">
+
+                            <label class="form-label text-muted">
+                                Item Type
+                            </label>
+
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="stockOutItemType"
+                                readonly
+                            >
+
+                        </div>
+
+
+                        <div class="col-md-4">
+
+                            <label class="form-label text-muted">
+                                Description
+                            </label>
+
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="stockOutDescription"
+                                readonly
+                            >
+
+                        </div>
+
+
+                        <div class="col-md-4">
+
+                            <label class="form-label text-muted">
+                                Current Stock
+                            </label>
+
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="stockOutCurrentStock"
+                                readonly
+                            >
+
+                        </div>
+
+
+                        <div class="col-md-4">
+
+                            <label class="form-label text-muted">
+                                Selling Price
+                            </label>
+
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="stockOutSellingPrice"
+                                readonly
+                            >
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- RESULT -->
+
+            <div
+                id="stockOutResult"
+                class="alert alert-info d-none mb-4"
+            ></div>
+
+
+            <!-- STOCK OUT FORM -->
+
+            <div class="card border-0 shadow-sm">
+
+                <div class="card-body p-4">
+
+                    <h5 class="fw-bold mb-4">
+
+                        <i class="bi bi-box-arrow-up text-danger me-2"></i>
+
+                        Remove Stock
+
+                    </h5>
+
+
+                    <form id="stockOutForm">
+
+
+                        <div class="row g-3">
+
+
+                            <!-- CURRENCY -->
+
+                            <div class="col-md-4">
+
+                                <label
+                                    for="stockOutCurrency"
+                                    class="form-label fw-semibold"
+                                >
+
+                                    Currency
+
+                                </label>
+
+
+                                <select
+                                    id="stockOutCurrency"
+                                    class="form-select"
+                                    required
+                                >
+
+                                    <option value="₦" selected>
+                                        Nigerian Naira (₦)
+                                    </option>
+
+                                    <option value="$">
+                                        US Dollar ($)
+                                    </option>
+
+                                    <option value="£">
+                                        British Pound (£)
+                                    </option>
+
+                                    <option value="€">
+                                        Euro (€)
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <!-- QUANTITY -->
+
+                            <div class="col-md-4">
+
+                                <label
+                                    for="stockOutQuantity"
+                                    class="form-label fw-semibold"
+                                >
+
+                                    Quantity to Remove
+
+                                </label>
+
+
+                                <input
+                                    type="number"
+                                    id="stockOutQuantity"
+                                    class="form-control"
+                                    min="1"
+                                    placeholder="Enter quantity"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <!-- TOTAL -->
+
+                            <div class="col-md-4">
+
+                                <label class="form-label fw-semibold">
+
+                                    Total Value
+
+                                </label>
+
+
+                                <div
+                                    id="stockOutTotalPrice"
+                                    class="form-control bg-light fw-bold"
+                                >
+
+                                    ₦0.00
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="mt-4">
+
+
+                            <button
+                                type="submit"
+                                class="btn btn-danger"
+                            >
+
+                                <i class="bi bi-dash-circle me-2"></i>
+
+                                Remove Stock
+
+                            </button>
+
+
+                            <button
+                                type="reset"
+                                class="btn btn-secondary"
+                            >
+
+                                <i class="bi bi-arrow-counterclockwise me-2"></i>
+
+                                Reset
+
+                            </button>
+
+                        </div>
+
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </main>
+
+    </div>
+
+</div>
+
+
+<!-- STOCK OUT SUCCESS MODAL -->
+
+<div
+    class="modal fade"
+    id="stockOutSuccessModal"
+    tabindex="-1"
+    aria-labelledby="stockOutSuccessModalLabel"
+    aria-hidden="true"
+>
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content border-0 shadow">
+
+
+            <div class="modal-header border-0">
+
+                <h5
+                    class="modal-title fw-bold"
+                    id="stockOutSuccessModalLabel"
+                >
+
+                    <i class="bi bi-check-circle-fill text-success me-2"></i>
+
+                    Stock Removed Successfully
+
+                </h5>
+
+            </div>
+
+
+            <div class="modal-body text-center py-4">
+
+                <i
+                    class="bi bi-check-circle-fill text-success"
+                    style="font-size: 4rem;"
+                ></i>
+
+
+                <h5 class="fw-bold mt-3">
+                    Success!
+                </h5>
+
+
+                <p
+                    class="text-muted"
+                    id="stockOutSuccessMessage"
+                >
+
+                    Stock has been successfully removed.
+
+                </p>
+
+
+                <div
+                    class="alert alert-light border"
+                    id="stockOutSuccessDetails"
+                ></div>
+
+            </div>
+
+
+            <div class="modal-footer justify-content-center border-0">
+
+                <button
+                    type="button"
+                    class="btn btn-success px-4"
+                    data-bs-dismiss="modal"
+                >
+
+                    <i class="bi bi-check-lg me-2"></i>
+
+                    Done
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- BOOTSTRAP JS -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+></script>
+
+
+<!-- STOCK OUT JS -->
+
+<script src="JS/stock-out.js"></script>
+
+
+</body>
+
+</html>
+

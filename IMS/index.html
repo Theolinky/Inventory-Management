@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard - Inventory Management System</title>
+
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <!-- Bootstrap Icons -->
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+    >
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="CSS/style.css">
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar navbar-dark bg-dark shadow-sm">
+
+    <div class="container-fluid">
+
+        <a class="navbar-brand fw-bold" href="index.html">
+
+            <i class="bi bi-boxes me-2"></i>
+
+            Inventory Management System
+
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- ================= MAIN LAYOUT ================= -->
+
+<div class="container-fluid">
+
+    <div class="row">
+
+
+        <!-- ================= SIDEBAR ================= -->
+
+        <aside class="sidebar col-md-3 col-lg-2 p-3">
+
+            <h5 class="fw-bold mb-3">
+
+                <i class="bi bi-boxes me-2"></i>
+
+                Inventory System
+
+            </h5>
+
+            <hr>
+
+
+            <ul class="nav flex-column">
+
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link active"
+                        href="index.html"
+                    >
+
+                        <i class="bi bi-speedometer2 me-2"></i>
+
+                        Dashboard
+
+                    </a>
+
+                </li>
+
+
+              
+
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="products.html"
+                    >
+
+                        <i class="bi bi-box-seam me-2"></i>
+
+                        Products
+
+                    </a>
+
+                </li>
+
+
+
+
+
+
+
+        
+
+
+
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="alerts.html"
+                    >
+
+                        <i class="bi bi-exclamation-triangle me-2"></i>
+
+                        Low Stock Alerts
+
+                    </a>
+
+                </li>
+
+            </ul>
+
+        </aside>
+
+
+        <!-- ================= DASHBOARD ================= -->
+
+        <main class="col-md-9 col-lg-10 dashboard-content">
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+
+                <div>
+
+                    <h2 class="fw-bold mb-1">
+
+                        Dashboard
+
+                    </h2>
+
+                    <p class="text-muted mb-0">
+
+                        Welcome to your Inventory Management System.
+
+                    </p>
+
+                </div>
+
+        
+
+            </div>
+
+
+            <!-- ================= DASHBOARD CARDS ================= -->
+
+            <div class="row g-3">
+
+
+                <!-- Total Products -->
+
+                <div class="col-md-6 col-lg-4 col-xl-3">
+
+                    <div class="card border-0 shadow-sm h-100">
+
+                        <div class="card-body border-start border-primary border-4">
+
+                            <h6 class="text-muted">
+
+                                <i class="bi bi-box-seam text-primary me-2"></i>
+
+                                Total Items
+
+                            </h6>
+
+                            <h3
+                                id="totalProducts"
+                                class="fw-bold text-primary"
+                            >
+                                0
+                            </h3>
+
+                            <p class="text-muted small mb-0">
+
+                                Items in inventory
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Categories -->
+
+                <div class="col-md-6 col-lg-4 col-xl-3">
+
+                    <div class="card border-0 shadow-sm h-100">
+
+                        <div class="card-body border-start border-success border-4">
+
+                            <h6 class="text-muted">
+
+                                <i class="bi bi-grid text-success me-2"></i>
+
+                                Categories
+
+                            </h6>
+
+                            <h3
+                                id="totalCategories"
+                                class="fw-bold text-success"
+                            >
+                                0
+                            </h3>
+
+                            <p class="text-muted small mb-0">
+
+                                Product categories
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Total Stock -->
+
+                <div class="col-md-6 col-lg-4 col-xl-3">
+
+                    <div class="card border-0 shadow-sm h-100">
+
+                        <div class="card-body border-start border-info border-4">
+
+                            <h6 class="text-muted">
+
+                                <i class="bi bi-boxes text-info me-2"></i>
+
+                                Total Stock
+
+                            </h6>
+
+                            <h3
+                                id="totalStock"
+                                class="fw-bold text-info"
+                            >
+                                0
+                            </h3>
+
+                            <p class="text-muted small mb-0">
+
+                                Units currently available
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Stock In -->
+
+                <div class="col-md-6 col-lg-4 col-xl-3">
+
+                    <div class="card border-0 shadow-sm h-100">
+
+                        <div class="card-body border-start border-success border-4">
+
+                            <h6 class="text-muted">
+
+                                <i class="bi bi-arrow-down-circle text-success me-2"></i>
+
+                                Stock In
+
+                            </h6>
+
+                            <h3
+                                id="totalStockIn"
+                                class="fw-bold text-success"
+                            >
+                                0
+                            </h3>
+
+                            <p class="text-muted small mb-0">
+
+                                Units added
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Stock Out -->
+
+                <div class="col-md-6 col-lg-4 col-xl-3">
+
+                    <div class="card border-0 shadow-sm h-100">
+
+                        <div class="card-body border-start border-danger border-4">
+
+                            <h6 class="text-muted">
+
+                                <i class="bi bi-arrow-up-circle text-danger me-2"></i>
+
+                                Stock Out
+
+                            </h6>
+
+                            <h3
+                                id="totalStockOut"
+                                class="fw-bold text-danger"
+                            >
+                                0
+                            </h3>
+
+                            <p class="text-muted small mb-0">
+
+                                Units removed
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Out of Stock -->
+
+                <div class="col-md-6 col-lg-4 col-xl-3">
+
+                    <div class="card border-0 shadow-sm h-100">
+
+                        <div class="card-body border-start border-danger border-4">
+
+                            <h6 class="text-muted">
+
+                                <i class="bi bi-x-circle text-danger me-2"></i>
+
+                                Out of Stock
+
+                            </h6>
+
+                            <h3
+                                id="outOfStock"
+                                class="fw-bold text-danger"
+                            >
+                                0
+                            </h3>
+
+                            <p class="text-muted small mb-0">
+
+                                Products unavailable
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Low Stock -->
+
+                <div class="col-md-6 col-lg-4 col-xl-3">
+
+                    <div class="card border-0 shadow-sm h-100">
+
+                        <div class="card-body border-start border-warning border-4">
+
+                            <h6 class="text-muted">
+
+                                <i class="bi bi-exclamation-triangle text-warning me-2"></i>
+
+                                Low Stock
+
+                            </h6>
+
+                            <h3
+                                id="lowStock"
+                                class="fw-bold text-warning"
+                            >
+                                0
+                            </h3>
+
+                            <p class="text-muted small mb-0">
+
+                                Items need restocking
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ================= LOW STOCK TABLE ================= -->
+
+<div class="card border-0 shadow-sm mt-4">
+
+
+<div class="card-body">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+
+        <div>
+            <h5 class="fw-bold mb-1">
+                Low Stock Items
+            </h5>
+
+            <p class="text-muted mb-0">
+                Products that are running low and need to be restocked.
+            </p>
+        </div>
+
+        <a
+        
+        </a>
+
+    </div>
+
+
+    <div class="table-responsive">
+
+        <table class="table table-hover align-middle">
+
+            <thead class="table-warning">
+
+                <tr>
+
+                    <th>S/N</th>
+                    <th>Item Code</th>
+                    <th>Item Name</th>
+                    <th>Category</th>
+                    <th>Quantity</th>
+                    <th>Reorder Level</th>
+                    <th>Status</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="lowStockTableBody">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+</div>
+
+<!-- ================= OUT OF STOCK TABLE ================= -->
+
+<div class="card border-0 shadow-sm mt-4  p-3">
+
+
+<div class="card-body">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+
+        <div>
+
+            <h5 class="fw-bold mb-1">
+                Out of Stock Items
+            </h5>
+
+            <p class="text-muted mb-0">
+                Products that are currently unavailable.
+            </p>
+
+        </div>
+
+        <span class="badge bg-danger">
+            <i class="bi bi-x-circle me-1"></i>
+            Out of Stock
+        </span>
+
+    </div>
+
+
+    <div class="table-responsive">
+
+        <table class="table table-hover align-middle">
+
+            <thead class="table-danger">
+
+                <tr>
+
+                    <th>S/N</th>
+                    <th>Item Code</th>
+                    <th>Item Name</th>
+                    <th>Category</th>
+                    <th>Quantity</th>
+                    <th>Reorder Level</th>
+                    <th>Status</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="outOfStockTableBody">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+</div>
+
+
+        </main>
+
+    </div>
+
+</div>
+
+
+
+
+<!-- =====================================
+     CLEAR ALL PRODUCTS MODAL
+===================================== -->
+
+<div
+    class="modal fade"
+    id="clearAllProductsModal"
+    tabindex="-1"
+    aria-labelledby="clearAllProductsModalLabel"
+    aria-hidden="true"
+>
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content border-0 shadow">
+
+            <!-- Header -->
+
+            <div class="modal-header">
+
+                <h5
+                    class="modal-title fw-bold"
+                    id="clearAllProductsModalLabel"
+                >
+
+                    <i class="bi bi-trash3 text-danger me-2"></i>
+
+                    Clear All Products
+
+                </h5>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                ></button>
+
+            </div>
+
+
+            <!-- Body -->
+
+            <div class="modal-body text-center py-4">
+
+                <div class="mb-3">
+
+                    <i
+                        class="bi bi-exclamation-triangle-fill text-danger"
+                        style="font-size: 4rem;"
+                    ></i>
+
+                </div>
+
+
+                <h5 class="fw-bold">
+
+                    Are you absolutely sure?
+
+                </h5>
+
+
+                <p class="text-muted">
+
+                    This will permanently remove
+
+                    <strong>all products</strong>
+
+                    from your inventory.
+
+                </p>
+
+
+                <div class="alert alert-danger text-start">
+
+                    <i class="bi bi-exclamation-circle me-2"></i>
+
+                    <strong>Warning:</strong>
+
+                    This action cannot be undone.
+
+                </div>
+
+            </div>
+
+
+            <!-- Footer -->
+
+            <div class="modal-footer justify-content-center">
+
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                >
+
+                    <i class="bi bi-x-circle me-1"></i>
+
+                    Cancel
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="btn btn-danger"
+                    id="confirmClearAllProducts"
+                >
+
+                    <i class="bi bi-trash3 me-1"></i>
+
+                    Yes, Clear Everything
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Bootstrap JavaScript -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+></script>
+
+
+<script src="JS/dashboard.js"></script>
+
+
+
+
+
+
+</body>
+
+</html>

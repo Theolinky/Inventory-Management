@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Register Item - Inventory Management System</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="CSS/style.css"
+    >
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-dark bg-dark shadow-sm">
+
+    <div class="container-fluid">
+
+        <a
+            class="navbar-brand fw-bold"
+            href="index.html"
+        >
+
+            <i class="bi bi-boxes me-2"></i>
+
+            Inventory Management System
+
+        </a>
+
+    </div>
+
+</nav>
+
+
+<div class="container-fluid">
+
+    <div class="row">
+
+
+        <!-- Sidebar -->
+
+        <aside class="sidebar col-md-3 col-lg-2 p-3">
+
+            <h5 class="fw-bold mb-3">
+
+                <i class="bi bi-boxes me-2"></i>
+
+                Inventory System
+
+            </h5>
+
+            <hr>
+
+            <ul class="nav flex-column">
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="index.html"
+                    >
+
+                        <i class="bi bi-speedometer2 me-2"></i>
+
+                        Dashboard
+
+                    </a>
+
+                </li>
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link active"
+                        href="register.html"
+                    >
+
+                        <i class="bi bi-plus-square me-2"></i>
+
+                        Item Registration
+
+                    </a>
+
+                </li>
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="products.html"
+                    >
+
+                        <i class="bi bi-box-seam me-2"></i>
+
+                        Products
+
+                    </a>
+
+                </li>
+
+                        
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="alerts.html"
+                    >
+
+                        <i class="bi bi-exclamation-triangle me-2"></i>
+
+                        Low Stock Alerts
+
+                    </a>
+
+                </li>
+
+            </ul>
+
+        </aside>
+
+
+        <!-- Main -->
+
+        <main class="col-md-9 col-lg-10 p-4">
+
+            <h2 class="fw-bold">
+
+                Item Registration
+
+            </h2>
+
+            <p class="text-muted">
+
+                Register a new item into your inventory.
+
+            </p>
+
+
+            <div class="card border-0 shadow-sm">
+
+                <div class="card-body p-4">
+
+                    <form id="itemForm">
+
+                        <h5 class="fw-bold mb-4">
+
+                            <i class="bi bi-box-seam text-primary me-2"></i>
+
+                            Item Information
+
+                        </h5>
+
+
+                        <div class="row">
+
+
+                            <div class="col-md-4 mb-3">
+
+                                <label
+                                    for="itemCode"
+                                    class="form-label fw-semibold"
+                                >
+                                    Item Code
+                                </label>
+
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="itemCode"
+                                    readonly
+                                >
+
+                            </div>
+
+
+                            <div class="col-md-4 mb-3">
+
+                                <label
+                                    for="category"
+                                    class="form-label fw-semibold"
+                                >
+                                    Category
+                                </label>
+
+                                <select
+                                    class="form-select"
+                                    id="category"
+                                    required
+                                >
+
+                                    <option
+                                        value=""
+                                        selected
+                                        disabled
+                                    >
+                                        Select category
+                                    </option>
+
+                                    <option value="Food">Food</option>
+
+                                    <option value="Beverages">
+                                        Beverages
+                                    </option>
+
+                                    <option value="Dairy">
+                                        Dairy
+                                    </option>
+
+                                    <option value="Household">
+                                        Household
+                                    </option>
+
+                                    <option value="Snacks">
+                                        Snacks
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="col-md-4 mb-3">
+
+                                <label
+                                    for="itemType"
+                                    class="form-label fw-semibold"
+                                >
+                                    Item Type
+                                </label>
+
+                                        <select
+                    class="form-select"
+                    id="itemType"
+                    required
+                >
+                    <option value="" selected disabled>
+                        Select item type
+                    </option>
+                </select>
+
+                            </div>
+
+
+                            <div class="col-md-12 mb-3">
+
+                                <label
+                                    for="itemDescription"
+                                    class="form-label fw-semibold"
+                                >
+                                    Item Description
+                                </label>
+
+                                <textarea
+                                    class="form-control"
+                                    id="itemDescription"
+                                    rows="3"
+                                    placeholder="Enter item description"
+                                    required
+                                ></textarea>
+
+                            </div>
+
+
+                            <div class="col-md-4 mb-3">
+
+                                <label
+                                    for="costPrice"
+                                    class="form-label fw-semibold"
+                                >
+                                    Cost Price
+                                </label>
+
+                                <input
+                                    type="number"
+                                    class="form-control"
+                                    id="costPrice"
+                                    min="0"
+                                    placeholder="Enter cost price"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="col-md-4 mb-3">
+
+                                <label
+                                    for="sellingPrice"
+                                    class="form-label fw-semibold"
+                                >
+                                    Selling Price
+                                </label>
+
+                                <input
+                                    type="number"
+                                    class="form-control"
+                                    id="sellingPrice"
+                                    min="0"
+                                    placeholder="Enter selling price"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="col-md-4 mb-3">
+
+                                <label
+                                    for="stockQuantity"
+                                    class="form-label fw-semibold"
+                                >
+                                    Stock Quantity
+                                </label>
+
+                                <input
+                                    type="number"
+                                    class="form-control"
+                                    id="stockQuantity"
+                                    min="0"
+                                    placeholder="Enter quantity"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="col-md-6 mb-3">
+
+                                <label
+                                    for="reorderLevel"
+                                    class="form-label fw-semibold"
+                                >
+                                    Reorder Level
+                                </label>
+
+                                <input
+                                    type="number"
+                                    class="form-control"
+                                    id="reorderLevel"
+                                    min="0"
+                                    placeholder="Enter reorder level"
+                                    required
+                                >
+
+                            </div>
+
+                        </div>
+
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary"
+                        >
+
+                            <i class="bi bi-save me-2"></i>
+
+                            Save Item
+
+                        </button>
+
+
+                        <button
+                            type="reset"
+                            class="btn btn-secondary"
+                        >
+
+                            Reset
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </main>
+
+    </div>
+
+</div>
+    <!-- =====================================
+     SUCCESS MODAL
+===================================== -->
+
+<!-- =====================================
+     SUCCESS MODAL
+===================================== -->
+
+<div
+    class="modal fade"
+    id="successModal"
+    tabindex="-1"
+    aria-labelledby="successModalLabel"
+    aria-hidden="true"
+>
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content border-0 shadow">
+
+            <!-- Modal Header -->
+
+            <div class="modal-header border-0">
+
+                <h5
+                    class="modal-title fw-bold"
+                    id="successModalLabel"
+                >
+
+                    <i class="bi bi-check-circle-fill text-success me-2"></i>
+
+                    Item Registered Successfully
+
+                </h5>
+
+            </div>
+
+
+            <!-- Modal Body -->
+
+            <div class="modal-body text-center py-4">
+
+                <div class="mb-3">
+
+                    <i
+                        class="bi bi-check-circle-fill text-success"
+                        style="font-size: 4rem;"
+                    ></i>
+
+                </div>
+
+                <h5 class="fw-bold">
+                    Success!
+                </h5>
+
+                <p class="text-muted mb-0">
+
+                    The item has been successfully
+                    added to your inventory.
+
+                </p>
+
+            </div>
+
+
+            <!-- Modal Footer -->
+
+            <div class="modal-footer justify-content-center border-0">
+
+                <button
+                    type="button"
+                    class="btn btn-success px-4"
+                    id="successContinueBtn"
+                >
+
+                    <i class="bi bi-box-seam me-2"></i>
+
+                    Continue to Products
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+></script>
+
+<script src="JS/app.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Products - Inventory Management System</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="CSS/style.css"
+    >
+
+</head>
+
+<body>
+
+
+<nav class="navbar navbar-dark bg-dark shadow-sm">
+
+    <div class="container-fluid">
+
+        <a
+            class="navbar-brand fw-bold"
+            href="index.html"
+        >
+
+            <i class="bi bi-boxes me-2"></i>
+
+            Inventory Management System
+
+        </a>
+
+    </div>
+
+</nav>
+
+
+<div class="container-fluid">
+
+    <div class="row">
+
+
+        <!-- Sidebar -->
+
+        <aside class="sidebar col-md-3 col-lg-2 p-3">
+
+            <h5 class="fw-bold mb-3">
+
+                <i class="bi bi-boxes me-2"></i>
+
+                Inventory System
+
+            </h5>
+
+            <hr>
+
+            <ul class="nav flex-column">
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="index.html"
+                    >
+
+                        <i class="bi bi-speedometer2 me-2"></i>
+
+                        Dashboard
+
+                    </a>
+
+                </li>
+
+             
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link active"
+                        href="products.html"
+                    >
+
+                        <i class="bi bi-box-seam me-2"></i>
+
+                        Products
+
+                    </a>
+
+                </li>
+
+    
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="alerts.html"
+                    >
+
+                        <i class="bi bi-exclamation-triangle me-2"></i>
+
+                        Low Stock Alerts
+
+                    </a>
+
+                </li>
+
+            </ul>
+
+        </aside>
+
+
+        <!-- Main -->
+
+        <main class="col-md-9 col-lg-10 p-4">
+
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+
+                <div>
+
+                    <h2 class="fw-bold mb-1">
+
+                        Products
+
+                    </h2>
+
+                    <p class="text-muted mb-0">
+
+                        Manage all items in your inventory.
+
+                    </p>
+
+                </div>
+
+
+             <div class="d-flex align-items-center">
+
+    <a
+        href="register.html"
+        class="btn btn-primary"
+    >
+        <i class="bi bi-plus-circle me-2"></i>
+        Add Product
+    </a>
+
+    
+
+</div>
+
+            </div>
+
+
+            <!-- Alert -->
+
+            <div
+                id="lowStockAlert"
+                class="alert alert-warning d-none"
+            ></div>
+
+
+            <!-- Search -->
+
+            <div class="card border-0 shadow-sm mb-4">
+
+                <div class="card-body">
+
+                    <div class="row g-3">
+
+                        <div class="col-md-8">
+
+                            <label
+                                class="form-label fw-semibold"
+                                for="searchInput"
+                            >
+
+                                Search Products
+
+                            </label>
+
+                            <div class="input-group">
+
+                                <span class="input-group-text">
+
+                                    <i class="bi bi-search"></i>
+
+                                </span>
+
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="searchInput"
+                                    placeholder="Search by category, item type or description..."
+                                >
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-md-4">
+
+                            <label
+                                class="form-label fw-semibold"
+                                for="categoryFilter"
+                            >
+
+                                Category
+
+                            </label>
+
+                            <select
+                                class="form-select"
+                                id="categoryFilter"
+                            >
+
+                                <option value="all">
+
+                                    All Categories
+
+                                </option>
+
+                                <option value="Food">Food</option>
+
+                                <option value="Beverages">
+                                    Beverages
+                                </option>
+
+                                <option value="Dairy">
+                                    Dairy
+                                </option>
+
+                                <option value="Household">
+                                    Household
+                                </option>
+
+                                <option value="Snacks">
+                                    Snacks
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Products Table -->
+
+            <div class="card border-0 shadow-sm">
+
+               <div class="table-responsive p-3">
+
+    <table class="table table-hover align-middle">
+
+        <thead class="table-light">
+
+            <tr>
+                <th>S/N</th>
+                <th>Code</th>
+                <th>Category</th>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Cost</th>
+                <th>Selling</th>
+                <th>Quantity</th>
+                <th>Reorder</th>
+                <th>Status</th>
+                <th>Action</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody id="productTableBody">
+
+        </tbody>
+
+    </table>
+
+</div>
+
+
+<!-- Pagination -->
+
+<div class="d-flex justify-content-between align-items-center mt-3 p-3">
+
+    <small class="text-muted" id="paginationInfo">
+        Showing 0 products
+    </small>
+
+    <nav>
+
+        <ul
+            class="pagination pagination-sm mb-0"
+            id="pagination"
+        >
+        </ul>
+
+    </nav>
+       
+</div>
+
+
+
+</div>
+
+
+
+
+<!-- =====================================
+     DELETE PRODUCT MODAL
+===================================== -->
+
+<div
+    class="modal fade"
+    id="deleteProductModal"
+    tabindex="-1"
+    aria-labelledby="deleteProductModalLabel"
+    aria-hidden="true"
+>
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content border-0 shadow">
+
+            <!-- Modal Header -->
+
+            <div class="modal-header">
+
+                <h5
+                    class="modal-title fw-bold"
+                    id="deleteProductModalLabel"
+                >
+                    <i class="bi bi-trash text-danger me-2"></i>
+                    Delete Product
+                </h5>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                ></button>
+
+            </div>
+
+
+            <!-- Modal Body -->
+
+            <div class="modal-body text-center py-4">
+
+                <div class="mb-3">
+
+                    <i
+                        class="bi bi-exclamation-triangle-fill text-danger"
+                        style="font-size: 3rem;"
+                    ></i>
+
+                </div>
+
+                <h5 class="fw-bold">
+                    Are you sure?
+                </h5>
+
+                <p class="text-muted mb-2">
+                    You are about to delete this product.
+                </p>
+
+                <p
+                    id="deleteProductName"
+                    class="fw-bold mb-1"
+                ></p>
+
+                <p
+                    id="deleteProductCode"
+                    class="text-muted small"
+                ></p>
+
+                <div class="alert alert-warning small mb-0">
+
+                    <i class="bi bi-info-circle me-1"></i>
+
+                    This action cannot be undone.
+
+                </div>
+
+            </div>
+
+
+            <!-- Modal Footer -->
+
+            <div class="modal-footer justify-content-center">
+
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                >
+
+                    <i class="bi bi-x-circle me-1"></i>
+
+                    Cancel
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="btn btn-danger"
+                    id="confirmDeleteBtn"
+                >
+
+                    <i class="bi bi-trash me-1"></i>
+
+                    Delete Product
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Bootstrap JS -->
+    <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+></script>
+
+<script src="JS/products.js"></script>
+</body>
+
+</html>

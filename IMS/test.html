@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inventory Management System</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet" />
+  
+  <style>
+    /* Custom SCSS-style Design Tokens & Custom CSS */
+    :root {
+      --bg-light: #f8f9fa;
+      --card-border-radius: 0.75rem;
+      --transition-speed: 0.2s ease-in-out;
+    }
+
+    body {
+      background-color: var(--bg-light);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    }
+
+    .stat-card {
+      border: none;
+      border-radius: var(--card-border-radius);
+      transition: transform var(--transition-speed);
+    }
+    
+    .stat-card:hover {
+      transform: translateY(-3px);
+    }
+
+    .badge-low-stock {
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-dark bg-dark mb-4">
+    <div class="container-fluid">
+      <span class="navbar-brand mb-0 h1"><i class="bi bi-box-seam me-2"></i>Inventory Manager</span>
+    </div>
+  </nav>
+
+  <div class="container mb-5">
+    
+    <!-- Dashboard Stats Row -->
+    <div class="row g-3 mb-4">
+      <div class="col-md-3">
+        <div class="card stat-card bg-primary text-white shadow-sm">
+          <div class="card-body">
+            <h6 class="card-title text-uppercase fs-7 opacity-75">Total Items</h6>
+            <h2 class="card-text fw-bold" id="dashTotalItems">0</h2>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card stat-card bg-success text-white shadow-sm">
+          <div class="card-body">
+            <h6 class="card-title text-uppercase fs-7 opacity-75">Total Stock Value</h6>
+            <h2 class="card-text fw-bold" id="dashTotalValue">$0.00</h2>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card stat-card bg-warning text-dark shadow-sm">
+          <div class="card-body">
+            <h6 class="card-title text-uppercase fs-7 opacity-75">Low Stock Items</h6>
+            <h2 class="card-text fw-bold" id="dashLowStockCount">0</h2>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card stat-card bg-danger text-white shadow-sm">
+          <div class="card-body">
+            <h6 class="card-title text-uppercase fs-7 opacity-75">Out of Stock</h6>
+            <h2 class="card-text fw-bold" id="dashOutOfStockCount">0</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Alert Container for Low Stock Notifications -->
+    <div id="alertContainer"></div>
+
+    <!-- Main Content Area -->
+    <div class="row g-4">
+      
+      <!-- Item Registration Form -->
+      <div class="col-lg-4">
+        <div class="card shadow-sm border-0 rounded-3">
+          <div class="card-header bg-white fw-bold py-3">
+            <i class="bi bi-plus-circle me-1"></i> Item Registration
+          </div>
+          <div class="card-body">
+            <form id="itemForm">
+              <div class="mb-3">
+                <label class="form-label">Item Code</label>
+                <input type="text" class="form-control" id="itemCode" required placeholder="e.g. SK-001" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Item Name</label>
+                <input type="text" class="form-control" id="itemName" required placeholder="e.g. Wireless Mouse" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Category</label>
+                <select class="form-select" id="itemCategory" required>
+                  <option value="" selected disabled>Select category</option>
+                  <option value="Electronics">Electronics</option>
+                  <option value="Apparel">Apparel</option>
+                  <option value="Groceries">Groceries</option>
+                  <option value="Hardware">Hardware</option>
+                </select>
+              </div>
+              <div class="row g-2 mb-3">
+                <div class="col-6">
+                  <label class="form-label">Cost Price ($)</label>
+                  <input type="number" step="0.01" class="form-control" id="costPrice" required min="0" placeholder="0.00" />
+                </div>
+                <div class="col-6">
+                  <label class="form-label">Selling Price ($)</label>
+                  <input type="number" step="0.01" class="form-control" id="sellingPrice" required min="0" placeholder="0.00" />
+                </div>
+              </div>
+              <div class="row g-2 mb-3">
+                <div class="col-6">
+                  <label class="form-label">Initial Stock</label>
+                  <input type="number" class="form-control" id="stockQty" required min="0" placeholder="0" />
+                </div>
+                <div class="col-6">
+                  <label class="form-label">Reorder Level</label>
+                  <input type="number" class="form-control" id="reorderLevel" required min="0" placeholder="5" />
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary w-100">
+                <i class="bi bi-save me-1"></i> Save Item
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Inventory Table & Controls -->
+      <div class="col-lg-8">
+        <div class="card shadow-sm border-0 rounded-3">
+          <div class="card-header bg-white py-3">
+            <div class="row g-2 align-items-center">
+              <div class="col-md-6">
+                <input type="text" class="form-control" id="searchInput" placeholder="Search by name or item code..." />
+              </div>
+              <div class="col-md-6">
+                <select class="form-select" id="filterCategory">
+                  <option value="ALL">All Categories</option>
+                  <option value="Electronics">Electronics</option>
+                  <option value="Apparel">Apparel</option>
+                  <option value="Groceries">Groceries</option>
+                  <option value="Hardware">Hardware</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="card-body p-0">
+            <div class="table-responsive">
+              <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th>Code</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Cost / Sell</th>
+                    <th>Stock Qty</th>
+                    <th>Status</th>
+                    <th class="text-end">Actions (Stock In/Out)</th>
+                  </tr>
+                </thead>
+                <tbody id="inventoryTableBody">
+                  <!-- Dynamic Content -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- JavaScript Logic -->
+  <script>
+    // State Array
+    let inventory = [
+      { id: 1, code: "SK-101", name: "Mechanical Keyboard", category: "Electronics", costPrice: 45.00, sellingPrice: 79.99, stockQty: 12, reorderLevel: 5 },
+      { id: 2, code: "SK-102", name: "Cotton T-Shirt", category: "Apparel", costPrice: 5.00, sellingPrice: 15.00, stockQty: 3, reorderLevel: 10 },
+      { id: 3, code: "SK-103", name: "USB-C Cable", category: "Electronics", costPrice: 2.00, sellingPrice: 9.99, stockQty: 0, reorderLevel: 5 }
+    ];
+
+    // DOM Elements
+    const itemForm = document.getElementById("itemForm");
+    const searchInput = document.getElementById("searchInput");
+    const filterCategory = document.getElementById("filterCategory");
+    const tableBody = document.getElementById("inventoryTableBody");
+
+    // Initialize Dashboard
+    document.addEventListener("DOMContentLoaded", () => {
+      renderTable();
+      updateDashboard();
+    });
+
+    // Form Submission: Item Registration
+    itemForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const newItem = {
+        id: Date.now(),
+        code: document.getElementById("itemCode").value.trim(),
+        name: document.getElementById("itemName").value.trim(),
+        category: document.getElementById("itemCategory").value,
+        costPrice: parseFloat(document.getElementById("costPrice").value),
+        sellingPrice: parseFloat(document.getElementById("sellingPrice").value),
+        stockQty: parseInt(document.getElementById("stockQty").value),
+        reorderLevel: parseInt(document.getElementById("reorderLevel").value)
+      };
+
+      inventory.push(newItem);
+      itemForm.reset();
+      renderTable();
+      updateDashboard();
+    });
+
+    // Render Table based on Search/Filter
+    function renderTable() {
+      const searchTerm = searchInput.value.toLowerCase();
+      const selectedCategory = filterCategory.value;
+
+      tableBody.innerHTML = "";
+
+      const filteredItems = inventory.filter(item => {
+        const matchesSearch = item.name.toLowerCase().includes(searchTerm) || item.code.toLowerCase().includes(searchTerm);
+        const matchesCategory = selectedCategory === "ALL" || item.category === selectedCategory;
+        return matchesSearch && matchesCategory;
+      });
+
+      if (filteredItems.length === 0) {
+        tableBody.innerHTML = `<tr><td colspan="7" class="text-center text-muted py-4">No inventory items found.</td></tr>`;
+        return;
+      }
+
+      filteredItems.forEach(item => {
+        const isLowStock = item.stockQty > 0 && item.stockQty <= item.reorderLevel;
+        const isOutOfStock = item.stockQty === 0;
+
+        let statusBadge = `<span class="badge bg-success">In Stock</span>`;
+        if (isOutOfStock) {
+          statusBadge = `<span class="badge bg-danger">Out of Stock</span>`;
+        } else if (isLowStock) {
+          statusBadge = `<span class="badge bg-warning text-dark badge-low-stock">Low Stock</span>`;
+        }
+
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td><strong>${item.code}</strong></td>
+          <td>${item.name}</td>
+          <td><span class="badge bg-light text-dark border">${item.category}</span></td>
+          <td>
+            <small class="text-muted">$${item.costPrice.toFixed(2)}</small> / 
+            <strong>$${item.sellingPrice.toFixed(2)}</strong>
+          </td>
+          <td><span class="fw-bold fs-6">${item.stockQty}</span></td>
+          <td>${statusBadge}</td>
+          <td class="text-end">
+            <button class="btn btn-sm btn-outline-success me-1" onclick="adjustStock(${item.id}, 1)" title="Stock In">
+              <i class="bi bi-plus-lg"></i> In
+            </button>
+            <button class="btn btn-sm btn-outline-danger" onclick="adjustStock(${item.id}, -1)" title="Stock Out">
+              <i class="bi bi-dash-lg"></i> Out
+            </button>
+          </td>
+        `;
+        tableBody.appendChild(tr);
+      });
+    }
+
+    // Adjust Stock Levels (Stock In / Stock Out)
+    function adjustStock(id, amount) {
+      const item = inventory.find(i => i.id === id);
+      if (!item) return;
+
+      if (amount < 0 && item.stockQty <= 0) {
+        alert("Stock cannot fall below zero.");
+        return;
+      }
+
+      item.stockQty += amount;
+      renderTable();
+      updateDashboard();
+    }
+
+    // Update Dashboard Indicators & Alerts
+    function updateDashboard() {
+      const totalItems = inventory.length;
+      const totalValue = inventory.reduce((acc, item) => acc + (item.stockQty * item.costPrice), 0);
+      const lowStockItems = inventory.filter(item => item.stockQty > 0 && item.stockQty <= item.reorderLevel);
+      const outOfStockItems = inventory.filter(item => item.stockQty === 0);
+
+      document.getElementById("dashTotalItems").innerText = totalItems;
+      document.getElementById("dashTotalValue").innerText = `$${totalValue.toFixed(2)}`;
+      document.getElementById("dashLowStockCount").innerText = lowStockItems.length;
+      document.getElementById("dashOutOfStockCount").innerText = outOfStockItems.length;
+
+      // Low Stock Alert Banner
+      const alertContainer = document.getElementById("alertContainer");
+      if (lowStockItems.length > 0 || outOfStockItems.length > 0) {
+        const warningNames = [...lowStockItems, ...outOfStockItems].map(i => i.name).join(", ");
+        alertContainer.innerHTML = `
+          <div class="alert alert-warning alert-dismissible fade show shadow-sm" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            <strong>Inventory Attention Required:</strong> The following items need reordering: <strong>${warningNames}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        `;
+      } else {
+        alertContainer.innerHTML = "";
+      }
+    }
+
+    // Event Listeners for Search and Filtering
+    searchInput.addEventListener("input", renderTable);
+    filterCategory.addEventListener("change", renderTable);
+  </script>
+
+  <!-- Bootstrap 5 Bundle JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
